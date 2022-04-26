@@ -1,3 +1,11 @@
+#Usuarios de Ejemplo para utilizar la aplicación
+### Administrador
+* Roles de usuario:
+
+  | tipo de usuario | usuario | contraseña 
+   | ----|----|--------|
+   | administrador | admin@ejemplo.com | 1234567
+* | empleado  | marco@ejemplo.com   | 1111111111
 # RegistroInventario
 
 Aplicación para llevar un registro del inventario del estado de vacunación de los empleados. Este proyecto está generado
