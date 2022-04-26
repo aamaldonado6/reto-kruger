@@ -1,0 +1,221 @@
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1>
+          <i class="fas fa-user"></i> Editar Empleado
+        </h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--formulario-->
+<form #clienteForm="ngForm" (ngSubmit)="guardar(clienteForm)">
+  <!--Botones-->
+  <section id="actions" class="py-4 mb-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <a routerLink="/" class="btn btn-warning btn-block">
+            <i class="fas fa-arrow-left"></i> Regresar al Inicio
+          </a>
+        </div>
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-success btn-block">
+            <i class="fas fa-check"></i> Guardar Datos
+          </button>
+        </div>
+        <div class="col-md-3">
+          <a  (click)="eliminarEmpleado()" class="btn btn-danger btn-block">
+            <i class="fas fa-trash"></i> Eliminar Empleado
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="details">
+    <div class="container">
+      <div class="row">
+        <!--ubicación del componente de las alertas-->
+        <flash-messages></flash-messages>
+        <!--formulario datos usuario-->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              <h4>Editar Cliente</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label id="cedula">Cédula</label>
+                <input
+                  type="number"
+                  name="cedula"
+                  class="form-control"
+                  #cedula="ngModel"
+                  [(ngModel)]="empleado.cedula"
+                  [ngClass]="{'is-invalid': cedula.errors && cedula.touched}"
+                  required
+                  pattern="[0-9]{10}"
+                >
+                <div [hidden]="!cedula.errors?.['required']" class="invalid-feedback">
+                  Cédula requerido
+                </div>
+                <div [hidden]="!cedula.errors?.['pattern']" class="invalid-feedback">
+                  Debe contener 10 caracteres
+                </div>
+              </div>
+              <div class="form-group">
+                <label id="nombres">Nombres</label>
+                <input
+                  type="text"
+                  name="nombres"
+                  class="form-control"
+                  #nombres="ngModel"
+                  [(ngModel)]="empleado.nombres"
+                  [ngClass]="{'is-invalid': nombres.errors && nombres.touched}"
+                  required
+                  pattern="^[a-zA-Z\s]{2,254}"
+                  minlength="3">
+                <div [hidden]="!nombres.errors?.['required']" class="invalid-feedback">
+                  Nombre requerido
+                </div>
+                <div [hidden]="!nombres.errors?.['minlength']" class="invalid-feedback">
+                  Debe contener al menos 3 caracteres
+                </div>
+                <div [hidden]="!nombres.errors?.['pattern']" class="invalid-feedback">
+                  Este campo solo se aceptan letras
+                </div>
+              </div>
+              <div class="form-group">
+                <label id="apellido">Apellidos</label>
+                <input
+                  type="text"
+                  name="apellido"
+                  class="form-control"
+                  #apellido="ngModel"
+                  [(ngModel)]="empleado.apellidos"
+                  [ngClass]="{'is-invalid': apellido.errors && apellido.touched}"
+                  required
+                  pattern="^[a-zA-Z\s]{2,254}"
+                  minlength="3">
+                <div [hidden]="!apellido.errors?.['required']" class="invalid-feedback">
+                  Apellido requerido
+                </div>
+                <div [hidden]="!apellido.errors?.['minlength']" class="invalid-feedback">
+                  Debe contener al menos 3 caracteres
+                </div>
+                <div [hidden]="!nombres.errors?.['pattern']" class="invalid-feedback">
+                  Este campo solo se aceptan letras
+                </div>
+              </div>
+              <div class="form-group">
+                <label id="email">Email</label>
+                <input
+                  disabled
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  #email="ngModel"
+                  [(ngModel)]="empleado.email"
+                  [ngClass]="{'is-invalid': email.errors && email.touched}"
+                  required
+                  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                >
+                <div [hidden]="!email.errors?.['required']" class="invalid-feedback">
+                  Email requerido
+                </div>
+                <div [hidden]="!email.errors?.['pattern']" class="invalid-feedback">
+                  Email no es válido
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--formulario datos extra-->
+        <div class="col-md-4">
+          <div class="card">
+            <div class="card-header">
+              <h4>Datos extra</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label id="nacimiento">Fecha de nacimiento</label>
+                <input
+                  type="date"
+                  name="nacimiento"
+                  class="form-control"
+                  [(ngModel)]="empleado.nacimiento"
+                >
+              </div>
+              <div class="form-group">
+                <label id="direccion">Dirección de domicilio</label>
+                <input
+                  type="text"
+                  name="direccion"
+                  class="form-control"
+                  [(ngModel)]="empleado.direccion"
+                >
+              </div>
+              <div class="form-group">
+                <label id="telefono">Teléfono</label>
+                <input
+                  type="number"
+                  name="telefono"
+                  class="form-control"
+                  [(ngModel)]="empleado.telefono"
+                >
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">Está vacunado?... {{empleado.estado ? "( si )" : "( no )"}}</label>
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="permitirRegistro"
+                  [(ngModel)]="empleado.estado"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--formulario vacunación-->
+        <div class="col-md-4">
+          <div class="card" *ngIf="empleado.estado">
+            <div class="card-header">
+              <h4>Editar Cliente</h4>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label id="vacuna">Tipo de vacuna</label>
+                <select required aria-required="true" class="form-select" aria-label="Default select example" (change)="seleccionarVacuna($event)">
+                  <option>{{empleado.tipo_vacuna}}</option>
+                  <option *ngFor="let vacuna of tiposVacunas; index as i" [value]="i">{{vacuna}}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label id="tipo">Fecha de la última vacuna</label>
+                <input
+                  required
+                  type="date"
+                  name="fecha_vacuna"
+                  class="form-control"
+                  [(ngModel)]="empleado.fecha_vacuna"
+                >
+              </div>
+              <div class="form-group">
+                <label id="dosis">Número de dosis</label>
+                <input
+                  type="number"
+                  name="dosis"
+                  class="form-control"
+                  [(ngModel)]="empleado.dosis"
+                  required
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
